@@ -1,2 +1,28 @@
 #!/usr/bin/env ruby
 puts 'Hi'
+class Tic_tac_toe 
+    attr_reader :name 
+    attr_accessor :player_input 
+
+    def initialize(name)
+        @name = name 
+        @player_input = nil 
+    end 
+
+    def display_board 
+        puts 
+    end  
+
+    def display_prompt 
+        puts "#{@name}, it is now your move"
+    end 
+
+    def player_move
+    end 
+
+    def evaluate_move
+    end 
+    
+end 
+
+
