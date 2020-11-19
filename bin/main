@@ -66,7 +66,7 @@ puts player1.name + ' will start'
 
 moves = row * row
 
-while moves > 0
+while moves.positive?
 
   # Assigns current player for move 'i'
 
