@@ -1,17 +1,18 @@
 #!/usr/bin/env ruby
 
-require '/welcome'
-require '/classes'
-
 print welcome_text
 
 puts 'Please Insert the Match Name'
 
 match_name = gets.chomp
 
+# Creating game objeect with 'TicTacToe' class
+
 game = TicTacToe.new(match_name)
 
 puts 'Insert name of players: '
+
+# Creating player objects from users name input
 
 player1 = Player.new(gets.chomp)
 player2 = Player.new(gets.chomp)
@@ -25,10 +26,16 @@ puts player2.name
 
 puts 'Now you insert the row or column numbers of your choice: '
 
+# Creating board object with 'Board' class
+
 rows = gets.chomp.to_i
 board = Board.new(rows)
 
+# displaying board using 'display_board' method of board object
+
 board.display_board
+
+# assigns symbol for player objects from user input
 
 puts 'Ok ' + player1.name + ' please pick your symbol: '
 
@@ -38,10 +45,16 @@ puts 'Ok ' + player2.name + ' please pick your symbol: '
 
 sym2 = player2.pick_symbol(gets.chomp.to_s)
 
+# Puts player's symbol choices
+
 puts player1.name + ' choses ' + sym1
 puts player2.name + ' choses ' + sym2
 
+# Puts 'Game ready' message and requests input for beginner
+
 puts 'Game is ready. Now pick the player for the first move: '
+
+# Assigns player which starts
 
 beginner = gets.chomp.to_s
 
@@ -49,13 +62,36 @@ game.starter(beginner, 25)
 
 puts player1.name + ' will start'
 
-rows.times do |i|
+# Iterating through alternating moves of players
+
+moves = row * row
+
+while moves > 0
+
+  # Assigns current player for move 'i'
+
   curr_player = game.current_player(i)
 
+  # puts message about whose turn it is
   puts '@ ' + curr_player.name + ', now your turn. Pick a cell: '
+
+  # Gets picked cell from user input
   pick = gets.chomp
+
+  # Evaluates move if move is wrong or game is over
+
+  game.evaluate
+
+  # updates board based on the curr_player moves
 
   puts board.update_symbol(pick.to_i, curr_player)
 
+  # Displays the updated board
+
   board.display_board
+  moves -= 1
 end
+
+# Display game result
+
+game.result
