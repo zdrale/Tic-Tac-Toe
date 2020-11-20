@@ -1,47 +1,36 @@
 #!/usr/bin/env ruby
-def display_board
-  puts ' | | '
-  puts '------'
-  puts ' | | '
-  puts '------'
-  puts ' | | '
+def display_board(moves_array = [])
+  puts "#{moves_array[0]} | #{moves_array[1]} | #{moves_array[2]}"
+  puts '----------'
+  puts "#{moves_array[3]} | #{moves_array[4]} | #{moves_array[5]}"
+  puts '----------'
+  puts "#{moves_array[6]} | #{moves_array[7]} | #{moves_array[8]}"
 end
 
 puts 'Hi, Welcome to TicTacToe game'
 
-puts 'Please Insert the Match Name'
-
-match_name = gets.chomp
-
-puts "Match name is #{match_name}"
-
 puts 'Insert name of players: '
 
 players = []
+sym = []
 
 players << gets.chomp.to_s
 players << gets.chomp.to_s
 
 puts "Hi #{players[0]} and #{players[1]}, welcome to tictactoe game: "
 
-puts 'Now you insert the size of your tictactoe board, which is number of cells in row or column: '
-
-rows = gets.chomp.to_i
-
-puts "You have created a #{rows} by #{rows} board"
-
 print display_board
 
 puts "Ok #{players[0]} please pick your symbol: "
 
-sym1 = gets.chomp.to_s
+sym[0] = gets.chomp.to_s
 
 puts "Ok #{players[1]} please pick your symbol: "
 
-sym2 = gets.chomp.to_s
+sym[1] = gets.chomp.to_s
 
-puts "#{players[0]} choses #{sym1}"
-puts "#{players[1]} choses #{sym2}"
+puts "#{players[0]} choses #{sym[0]}"
+puts "#{players[1]} choses #{sym[1]}"
 
 flag = 'Y'
 
@@ -51,47 +40,49 @@ while flag == 'Y'
 
   puts 'Game is ready. Now pick the player for the first move: '
 
-  beginner = gets.chomp.to_s
+  name_match = false
 
-  unless beginner == players[0]
+  until name_match == true
+    beginner = gets.chomp.to_s
+    name_match = true
+    next if beginner == players[0]
+    name_match = false
     if beginner == players[1]
-      a = players[0]
-      players[0] = players[1]
-      players[1] = a
+      name_match = true
+      players[0], players[1] = players[1], players[0]
+      sym[0], sym[1] = sym[1], sym[0]
     else
-      puts 'wrong input'
+      puts 'wrong input, Please insert correct player name: '
     end
   end
 
   puts "#{players[0]} will start'"
 
-  moves = rows**2
+  moves_arr = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
-  moves_arr = []
-
-  while i <= moves
+  while i < 9
 
     current_player = players[i % 2]
 
     puts "@ #{current_player}, now your turn. Pick a cell which has available spot: "
 
-    print display_board
+    print display_board(moves_arr)
 
-    pick = gets.chomp
+    pick = gets.chomp.to_i
 
-    while moves_arr.any?(pick)
+    while moves_arr.any?(pick - 1) || !(1..9).cover?(pick - 1)
 
       puts 'wrong input. Please pick another cell no.: '
-      pick = gets.chomp
+      pick = gets.chomp.to_i
 
     end
 
-    print display_board
+    moves_arr[pick - 1] = sym[i % 2]
+
+    print display_board(moves_arr)
 
     win_move = 4
     draw_move = 7
-
-    moves_arr << pick
 
     game_flag = 0
 
