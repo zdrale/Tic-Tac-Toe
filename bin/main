@@ -46,6 +46,7 @@ while flag == 'Y'
     beginner = gets.chomp.to_s
     name_match = true
     next if beginner == players[0]
+
     name_match = false
     if beginner == players[1]
       name_match = true
