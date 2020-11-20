@@ -105,6 +105,7 @@ while flag == 'Y'
     end
 
     break unless game_flag.zero?
+
     i += 1
   end
 
