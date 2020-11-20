@@ -1,97 +1,90 @@
 #!/usr/bin/env ruby
 
-print welcome_text
+puts 'Hi, Welcome to TicTacToe game'
 
 puts 'Please Insert the Match Name'
 
 match_name = gets.chomp
 
-# Creating game objeect with 'TicTacToe' class
-
-game = TicTacToe.new(match_name)
+puts "Match name is #{match_name}"
 
 puts 'Insert name of players: '
 
-# Creating player objects from users name input
+players = []
 
-player1 = Player.new(gets.chomp)
-player2 = Player.new(gets.chomp)
+players << gets.chomp.to_s
+players << gets.chomp.to_s
 
-game.add_player(player1)
-game.add_player(player2)
+puts "Hi #{players[0]} and #{players[1]}, welcome to tictactoe game: "
 
-puts 'The players are: '
-puts player1.name
-puts player2.name
-
-puts 'Now you insert the row or column numbers of your choice: '
-
-# Creating board object with 'Board' class
+puts 'Now you insert the size of your tictactoe board, which is number of cells in row or column: '
 
 rows = gets.chomp.to_i
-board = Board.new(rows)
 
-# displaying board using 'display_board' method of board object
+puts "You have created a #{rows} by #{rows} board"
 
-board.display_board
+puts 'Ok ' + players[0] + ' please pick your symbol: '
 
-# assigns symbol for player objects from user input
+sym1 = gets.chomp.to_s
 
-puts 'Ok ' + player1.name + ' please pick your symbol: '
+puts 'Ok ' + players[1] + ' please pick your symbol: '
 
-sym1 = player1.pick_symbol(gets.chomp.to_s)
+sym2 = gets.chomp.to_s
 
-puts 'Ok ' + player2.name + ' please pick your symbol: '
+puts players[0] + ' choses ' + sym1
+puts players[1] + ' choses ' + sym2
 
-sym2 = player2.pick_symbol(gets.chomp.to_s)
+flag = 'Y'
 
-# Puts player's symbol choices
+while flag == 'Y'
 
-puts player1.name + ' choses ' + sym1
-puts player2.name + ' choses ' + sym2
+  i = 0
 
-# Puts 'Game ready' message and requests input for beginner
+  puts 'Game is ready. Now pick the player for the first move: '
 
-puts 'Game is ready. Now pick the player for the first move: '
+  beginner = gets.chomp.to_s
 
-# Assigns player which starts
+  unless beginner == players[0]
+    if beginner == players[1]
+      a = players[0]
+      players[0] = players[1]
+      players[1] = a
+    else
+      puts 'wrong input'
+    end
+  end
 
-beginner = gets.chomp.to_s
+  puts players[0] + ' will start'
 
-game.starter(beginner, 25)
+  moves = rows * rows
 
-puts player1.name + ' will start'
+  moves_arr = []
 
-# Iterating through alternating moves of players
+  while i <= moves
 
-moves = row * row
+    current_player = players[i % 2]
 
-while moves.positive?
+    puts '@ ' + current_player + ', now your turn. Pick a cell: '
 
-  # Assigns current player for move 'i'
+    pick = gets.chomp
 
-  curr_player = game.current_player(i)
+    while moves_arr.any?(pick)
 
-  # puts message about whose turn it is
-  puts '@ ' + curr_player.name + ', now your turn. Pick a cell: '
+      puts 'wrong input. Please pick another cell no.: '
+      pick = gets.chomp
 
-  # Gets picked cell from user input
-  pick = gets.chomp
+    end
 
-  # Evaluates move if move is wrong or game is over
+    moves_arr << pick
 
-  game.evaluate
+    puts "You picked cell no. #{pick}"
 
-  # updates board based on the curr_player moves
+    i += 1
 
-  puts board.update_symbol(pick.to_i, curr_player)
+  end
 
-  # Displays the updated board
+  puts 'Game is over. Would you like to continuue? (Y) or quit? (N): '
 
-  board.display_board
-  moves -= 1
+  flag = gets.chomp.to_s
+
 end
-
-# Display game result
-
-game.result
