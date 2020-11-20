@@ -1,4 +1,11 @@
 #!/usr/bin/env ruby
+def display_board
+  puts ' | | '
+  puts '------'
+  puts ' | | '
+  puts '------'
+  puts ' | | '
+end
 
 puts 'Hi, Welcome to TicTacToe game'
 
@@ -23,16 +30,18 @@ rows = gets.chomp.to_i
 
 puts "You have created a #{rows} by #{rows} board"
 
-puts 'Ok ' + players[0] + ' please pick your symbol: '
+print display_board
+
+puts "Ok #{players[0]} please pick your symbol: "
 
 sym1 = gets.chomp.to_s
 
-puts 'Ok ' + players[1] + ' please pick your symbol: '
+puts "Ok #{players[1]} please pick your symbol: "
 
 sym2 = gets.chomp.to_s
 
-puts players[0] + ' choses ' + sym1
-puts players[1] + ' choses ' + sym2
+puts "#{players[0]} choses #{sym1}"
+puts "#{players[1]} choses #{sym2}"
 
 flag = 'Y'
 
@@ -54,9 +63,9 @@ while flag == 'Y'
     end
   end
 
-  puts players[0] + ' will start'
+  puts "#{players[0]} will start'"
 
-  moves = rows * rows
+  moves = rows**2
 
   moves_arr = []
 
@@ -64,7 +73,7 @@ while flag == 'Y'
 
     current_player = players[i % 2]
 
-    puts '@ ' + current_player + ', now your turn. Pick a cell: '
+    puts "@ #{current_player}, now your turn. Pick a cell: '"
 
     pick = gets.chomp
 
@@ -75,12 +84,28 @@ while flag == 'Y'
 
     end
 
+    print display_board
+
+    win_move = 4
+    draw_move = 7
+
     moves_arr << pick
 
-    puts "You picked cell no. #{pick}"
+    game_flag = 0
 
+    case pick.to_i
+    when win_move
+      puts 'You win the game'
+      game_flag = 1
+    when draw_move
+      puts 'Game ends with draw'
+      game_flag = 1
+    else
+      puts "You picked cell no. #{pick}"
+    end
+
+    break unless game_flag.zero?
     i += 1
-
   end
 
   puts 'Game is over. Would you like to continuue? (Y) or quit? (N): '
