@@ -73,7 +73,9 @@ while flag == 'Y'
 
     current_player = players[i % 2]
 
-    puts "@ #{current_player}, now your turn. Pick a cell: '"
+    puts "@ #{current_player}, now your turn. Pick a cell which has available spot: "
+
+    print display_board
 
     pick = gets.chomp
 
