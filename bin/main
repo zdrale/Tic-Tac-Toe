@@ -69,33 +69,32 @@ while flag == 'Y'
 
     print display_board(moves_arr)
 
-    pick = gets.chomp.to_i
+    pick = gets.chomp.to_i - 1
 
-    while moves_arr.any?(pick - 1) || !(1..9).cover?(pick - 1)
+    while (moves_arr[pick] != ' ') || !(0..10).cover?(pick)
 
       puts 'wrong input. Please pick another cell no.: '
-      pick = gets.chomp.to_i
+      pick = gets.chomp.to_i - 1
 
     end
 
-    moves_arr[pick - 1] = sym[i % 2]
+    moves_arr[pick] = sym[i % 2]
 
     print display_board(moves_arr)
 
-    win_move = 4
-    draw_move = 7
+    win_move = 0
+    draw_move = 9
 
     game_flag = 0
 
     case pick.to_i
-    when win_move
-      puts 'You win the game'
+    when win_move - 1
+      puts 'You made the winning move. You won!!!'
       game_flag = 1
-    when draw_move
-      puts 'Game ends with draw'
-      game_flag = 1
+    when draw_move - 1
+      puts 'Game ends with draw result'
     else
-      puts "You picked cell no. #{pick}"
+      puts "You picked cell no. #{pick + 1}"
     end
 
     break unless game_flag.zero?
