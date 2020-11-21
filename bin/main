@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-def display_board(moves_array = [])
+def display_board(moves_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '])
   puts "#{moves_array[0]} | #{moves_array[1]} | #{moves_array[2]}"
   puts '----------'
   puts "#{moves_array[3]} | #{moves_array[4]} | #{moves_array[5]}"
@@ -82,8 +82,10 @@ while flag == 'Y'
 
     print display_board(moves_arr)
 
-    win_move = 0
-    draw_move = 9
+    win_move = 9
+
+    draw_move = 0
+    draw_move = pick + 1 if i == 8
 
     game_flag = 0
 
