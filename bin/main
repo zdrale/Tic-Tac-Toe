@@ -1,36 +1,35 @@
 #!/usr/bin/env ruby
-def display_board(moves_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '])
-  puts "#{moves_array[0]} | #{moves_array[1]} | #{moves_array[2]}"
-  puts '----------'
-  puts "#{moves_array[3]} | #{moves_array[4]} | #{moves_array[5]}"
-  puts '----------'
-  puts "#{moves_array[6]} | #{moves_array[7]} | #{moves_array[8]}"
-end
+
+require_relative '../lib/board.rb'
+require_relative '../lib/player.rb' 
 
 puts 'Hi, Welcome to TicTacToe game'
 
-puts 'Insert name of players: '
+puts 'Insert name of two players: '
 
-players = []
-sym = []
+# Creating player object 
 
-players << gets.chomp.to_s
-players << gets.chomp.to_s
+player1 = Player.new (gets.chomp.to_s)
+player2 = Player.new (gets.chomp.to_s)
 
-puts "Hi #{players[0]} and #{players[1]}, welcome to tictactoe game: "
+players = [player1, player2]
 
-print display_board
+puts "Hi #{players[0].name} and #{players[1].name}, welcome to tictactoe game: "
 
-puts "Ok #{players[0]} please pick your symbol: "
+board = Board.new
 
-sym[0] = gets.chomp.to_s
+print board.display_board
 
-puts "Ok #{players[1]} please pick your symbol: "
+puts "Ok #{players[0].name} please pick your symbol: "
 
-sym[1] = gets.chomp.to_s
+players[0].pick_symbol(gets.chomp.to_s)
 
-puts "#{players[0]} choses #{sym[0]}"
-puts "#{players[1]} choses #{sym[1]}"
+puts "Ok #{players[1].name} please pick your symbol: "
+
+players[1].pick_symbol(gets.chomp.to_s)
+
+puts "#{players[0].name} choses #{players[0].sym}"
+puts "#{players[1].name} choses #{players[1].sym}"
 
 flag = 'Y'
 
@@ -45,42 +44,42 @@ while flag == 'Y'
   until name_match == true
     beginner = gets.chomp.to_s
     name_match = true
-    next if beginner == players[0]
+    next if beginner == players[0].name
 
     name_match = false
-    if beginner == players[1]
+    if beginner == players[1].name
       name_match = true
-      players[0], players[1] = players[1], players[0]
-      sym[0], sym[1] = sym[1], sym[0]
+      players[0], players[1] = players[1], players[0]      
     else
       puts 'wrong input, Please insert correct player name: '
     end
   end
 
-  puts "#{players[0]} will start'"
-
-  moves_arr = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+  puts "#{players[0].name} will start'"  
 
   while i < 9
 
     current_player = players[i % 2]
 
-    puts "@ #{current_player}, now your turn. Pick a cell which has available spot: "
+    puts "@ #{current_player.name}, now your turn. Pick a cell which has available spot: "
 
-    print display_board(moves_arr)
+    print board.display_board
 
     pick = gets.chomp.to_i - 1
+    
 
-    while (moves_arr[pick] != ' ') || !(0..10).cover?(pick)
+    while (board.symbol[pick] != ' ') || !(0..10).cover?(pick)
 
       puts 'wrong input. Please pick another cell no.: '
       pick = gets.chomp.to_i - 1
 
     end
 
-    moves_arr[pick] = sym[i % 2]
+    board.symbol[pick] = current_player.sym
 
-    print display_board(moves_arr)
+    board.update_board(pick, current_player)
+
+    print board.display_board
 
     win_move = 9
 
