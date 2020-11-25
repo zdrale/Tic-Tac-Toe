@@ -2,55 +2,7 @@
 
 require_relative '../lib/board.rb'
 require_relative '../lib/player.rb'
-
-class TicTacToe
-  def create_players(name1, name2)
-    @players = [Player.new(name1), Player.new(name2)]
-  end
-
-  def create_board
-    @board = Board.new
-  end
-
-  def print_board
-    print @board.display_board
-  end
-
-  def pick_symbol(sym1, sym2)
-    @players[0].pick_symbol(sym1)
-    @players[1].pick_symbol(sym2)
-  end
-
-  def set_beginner
-    beginner = gets.chomp.to_s
-    until [@players[0].name, @players[1].name].include?(beginner)
-      puts 'wrong input, Please insert correct player name: '
-      beginner = gets.chomp.to_s
-    end
-
-    @players[0], @players[1] = @players[1], @players[0] unless beginner == @players[0].name
-  end
-
-  def put_current_player(step)
-    @current_player = @players[step % 2]
-  end
-
-  def check_move(pick)
-    (@board.symbol[pick] != ' ') || !(0..10).cover?(pick) ? true : false
-  end
-
-  def update_board(pick)
-    @board.update_board(pick, @current_player)
-  end
-
-  def win_move?
-    @win_triplets = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
-    @win_triplets.each do |triplet|
-      return true if [@board.symbol[triplet[0] - 1], @board.symbol[triplet[1] - 1],
-                      @board.symbol[triplet[2] - 1]].all?(@current_player.sym) == true
-    end
-  end
-end
+require_relative '../lib/tictactoe.rb'
 
 # Game user interface
 
@@ -98,6 +50,7 @@ while flag == 'Y'
   while i < 9
 
     current_player = game.put_current_player(i)
+    game.put_next_player(i)
 
     puts "@ #{current_player.name}, now your turn. Pick a cell which has available spot: "
 
@@ -116,10 +69,14 @@ while flag == 'Y'
 
     game_flag = 0
 
+    if i == 6 || i == 7 then 
+      puts game.draw_move? 
+    end 
+
     if game.win_move? == true
       puts 'You made the winning move. You won!!!'
       game_flag = 1
-    elsif i == 9
+    elsif  [6, 7].include?(i) && game.draw_move? == true  
       puts 'Game ends with draw result'
     else
       puts "You picked cell no. #{pick + 1}"
