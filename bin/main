@@ -23,7 +23,7 @@ class TicTacToe
 
   def set_beginner
     beginner = gets.chomp.to_s
-    until beginner == @players[0].name || beginner == @players[1].name
+    until [@players[0].name, @players[1].name].include?(beginner)
       puts 'wrong input, Please insert correct player name: '
       beginner = gets.chomp.to_s
     end
@@ -31,8 +31,8 @@ class TicTacToe
     @players[0], @players[1] = @players[1], @players[0] unless beginner == @players[0].name
   end
 
-  def put_current_player(i)
-    @current_player = @players[i % 2]
+  def put_current_player(step)
+    @current_player = @players[step % 2]
   end
 
   def check_move(pick)
