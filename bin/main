@@ -3,6 +3,7 @@
 require_relative '../lib/board.rb'
 require_relative '../lib/player.rb'
 require_relative '../lib/tictactoe.rb'
+require_relative '../lib/err_report.rb'
 
 # Game user interface
 
@@ -15,10 +16,15 @@ while flag == 'Y'
   puts 'Hi, Welcome to TicTacToe game'
 
   puts 'Insert name of two players: '
-
+  check_symbol = false
   # Creating player object
+  while check_symbol == false
 
-  players = game.create_players(gets.chomp.to_s, gets.chomp.to_s)
+    players = game.create_players(gets.chomp.to_s, gets.chomp.to_s)
+
+    check_symbol = validate_name(players[0].name, players[1].name)
+
+  end
 
   puts "Hi #{players[0].name} and #{players[1].name}, welcome to tictactoe game: "
 
@@ -26,13 +32,21 @@ while flag == 'Y'
 
   game.print_board
 
-  puts "Ok #{players[0].name} please pick your symbol: "
+  check_sym = false
 
-  sym1 = gets.chomp.to_s
+  while check_sym == false
 
-  puts "Ok #{players[1].name} please pick your symbol: "
+    puts "Ok #{players[0].name} please pick your symbol: "
 
-  sym2 = gets.chomp.to_s
+    sym1 = gets.chomp.to_s
+
+    puts "Ok #{players[1].name} please pick your symbol: "
+
+    sym2 = gets.chomp.to_s
+
+    check_sym = validate_symbol(sym1, sym2)
+
+  end
 
   game.pick_symbol(sym1, sym2)
 
@@ -69,16 +83,14 @@ while flag == 'Y'
 
     game_flag = 0
 
-    if i == 6 || i == 7 then 
-      puts game.draw_move? 
-    end 
-
     if game.win_move? == true
       puts 'You made the winning move. You won!!!'
       game_flag = 1
-    elsif  [6, 7].include?(i) && game.draw_move? == true  
+    elsif [6, 7].include?(i) && game.draw_move? == true
       puts 'Game ends with draw result'
+      game_flag = 1
     else
+
       puts "You picked cell no. #{pick + 1}"
     end
 
