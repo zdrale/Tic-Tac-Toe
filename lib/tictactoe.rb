@@ -39,7 +39,7 @@ class TicTacToe
   end
 
   def put_next_player(step)
-    @next_player = @players[step % 2 + 1]
+    @next_player = @players[(step % 2 - 1).abs]
   end
 
   def check_move(pick)
@@ -76,7 +76,7 @@ class TicTacToe
     end
     if remains.size == 1
       puts "remains are: #{remains[0] + 1}"
-      return false if win_move?(remains[0], @current_player.sym) == true
+      return false if win_move?(remains[0], @next_player.sym) == true
     end
     true
   end
