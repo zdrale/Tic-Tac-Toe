@@ -91,7 +91,7 @@ class TicTacToe
         return false
       end
     end
-    @board.symbol[remains[0]] = ' '    
+    @board.symbol[remains[0]] = ' '
     true
   end
 end
