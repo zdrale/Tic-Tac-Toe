@@ -1,6 +1,3 @@
-# rubocop:disable Metrics/CyclomaticComplexity
-# rubocop:disable  Metrics/MethodLength
-
 require_relative '../lib/board.rb'
 require_relative '../lib/player.rb'
 
@@ -43,17 +40,17 @@ class TicTacToe
   end
 
   def check_move(pick)
-    (@board.symbol[pick] != ' ') || !(0..10).cover?(pick) ? true : false
+    (@board.symbol[pick] != ' ') || !(0..8).cover?(pick) ? true : false
   end
 
   def update_board(pick)
     @board.update_board(pick, @current_player)
   end
 
-  def win_move?
-    WIN_TRIPLETS.each do |triplet|
-      return true if [@board.symbol[triplet[0] - 1], @board.symbol[triplet[1] - 1],
-                      @board.symbol[triplet[2] - 1]].all?(@current_player.sym) == true
+  def win_move?(picked, symb = @current_player.sym)
+    WIN_TRIPLETS.each do |triplet|      
+      return true if triplet.include?(picked+1) && [@board.symbol[triplet[0] - 1], @board.symbol[triplet[1] - 1],
+                      @board.symbol[triplet[2] - 1]].count(symb) == 2
     end
   end
 
@@ -62,39 +59,24 @@ class TicTacToe
     (0..8).each do |i|
       remains << i unless @board.symbol[i] != ' '
       next i
-    end
-
-    puts 'remains are: '
-    puts remains
-    unless remains.size <= 1
-      @board.symbol[remains[0]] = @current_player.sym
-      @board.symbol[remains[1]] = @next_player.sym
-
-      if win_move? == true
-        @board.symbol[remains[0]] = ' '
-        @board.symbol[remains[1]] = ' '
+    end   
+    
+    unless remains.size <= 1  
+      puts "remains are: #{remains[0]+1} and #{remains[1]+1}"
+      if win_move?(remains[0], @next_player.sym) == true || win_move?(remains[1], @current_player.sym) == true 
         return false
       end
-
-      @board.symbol[remains[0]] = @next_player.sym
-      @board.symbol[remains[1]] = @current_player.sym
-      if win_move? == true
-        @board.symbol[remains[0]] = ' '
-        @board.symbol[remains[1]] = ' '
+      
+      if win_move?(remains[1], @next_player.sym) == true || win_move?(remains[0], @current_player.sym) == true      
         return false
       end
     end
-    if remains.size == 1
-      @board.symbol[remains[0]] = @current_player.sym
-      if win_move? == true
-        @board.symbol[remains[0]] = ' '
+    if remains.size == 1    
+      puts "remains are: #{remains[0]+1}" 
+      if win_move?(remains[0], @current_player.sym) == true        
         return false
       end
-    end
-    @board.symbol[remains[0]] = ' '
+    end    
     true
   end
 end
-
-# rubocop:enable Metrics/CyclomaticComplexity
-# rubocop:enable  Metrics/MethodLength
