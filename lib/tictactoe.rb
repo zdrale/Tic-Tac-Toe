@@ -1,3 +1,6 @@
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/CyclomaticComplexity
+
 require_relative '../lib/board.rb'
 require_relative '../lib/player.rb'
 
@@ -48,9 +51,9 @@ class TicTacToe
   end
 
   def win_move?(picked, symb = @current_player.sym)
-    WIN_TRIPLETS.each do |triplet|      
-      return true if triplet.include?(picked+1) && [@board.symbol[triplet[0] - 1], @board.symbol[triplet[1] - 1],
-                      @board.symbol[triplet[2] - 1]].count(symb) == 2
+    WIN_TRIPLETS.each do |triplet|
+      return true if triplet.include?(picked + 1) && [@board.symbol[triplet[0] - 1], @board.symbol[triplet[1] - 1],
+                                                      @board.symbol[triplet[2] - 1]].count(symb) == 2
     end
   end
 
@@ -59,24 +62,25 @@ class TicTacToe
     (0..8).each do |i|
       remains << i unless @board.symbol[i] != ' '
       next i
-    end   
-    
-    unless remains.size <= 1  
-      puts "remains are: #{remains[0]+1} and #{remains[1]+1}"
-      if win_move?(remains[0], @next_player.sym) == true || win_move?(remains[1], @current_player.sym) == true 
+    end
+
+    unless remains.size <= 1
+      puts "remains are: #{remains[0] + 1} and #{remains[1] + 1}"
+      if win_move?(remains[0], @next_player.sym) == true || win_move?(remains[1], @current_player.sym) == true
         return false
       end
-      
-      if win_move?(remains[1], @next_player.sym) == true || win_move?(remains[0], @current_player.sym) == true      
+
+      if win_move?(remains[1], @next_player.sym) == true || win_move?(remains[0], @current_player.sym) == true
         return false
       end
     end
-    if remains.size == 1    
-      puts "remains are: #{remains[0]+1}" 
-      if win_move?(remains[0], @current_player.sym) == true        
-        return false
-      end
-    end    
+    if remains.size == 1
+      puts "remains are: #{remains[0] + 1}"
+      return false if win_move?(remains[0], @current_player.sym) == true
+    end
     true
   end
 end
+
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity

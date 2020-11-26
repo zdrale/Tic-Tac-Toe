@@ -77,16 +77,17 @@ while flag == 'Y'
       pick = gets.chomp.to_i - 1
     end
 
-    
-
     game_flag = 0
 
     if game.win_move?(pick) == true
       puts 'You made the winning move. You won!!!'
       game_flag = 1
-    end 
-    break unless game_flag.zero?
+    end
+
     game.update_board(pick)
+    game.print_board
+
+    break unless game_flag.zero?
 
     if [6, 7].include?(i) && game.draw_move? == true
       puts 'Game ends with draw result'
@@ -94,7 +95,7 @@ while flag == 'Y'
     else
 
       puts "You picked cell no. #{pick + 1}"
-    end    
+    end
 
     game.print_board
 
