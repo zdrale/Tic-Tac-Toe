@@ -1,3 +1,6 @@
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable  Metrics/MethodLength
+
 require_relative '../lib/board.rb'
 require_relative '../lib/player.rb'
 
@@ -88,8 +91,10 @@ class TicTacToe
         return false
       end
     end
-    @board.symbol[remains[0]] = ' '
-    @board.symbol[remains[1]] = ' '
+    @board.symbol[remains[0]] = ' '    
     true
   end
 end
+
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable  Metrics/MethodLength

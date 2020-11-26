@@ -1,5 +1,5 @@
 class Player
-  attr_accessor :name, :game, :sym
+  attr_reader :name, :game, :sym
 
   def initialize(name)
     @name = name
