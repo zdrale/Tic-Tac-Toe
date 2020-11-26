@@ -57,7 +57,14 @@ while flag == 'Y'
 
   puts 'Game is ready. Now pick the player for the first move: '
 
-  game.set_beginner
+  beginner = gets.chomp.to_s
+
+  while game.check_beginner(beginner)
+    puts 'Wrong name. You should give one of the players name or symbol. Please choose player for first move: '
+    beginner = gets.chomp.to_s
+  end
+
+  game.set_beginner if players[0].name != beginner
 
   puts "#{players[0].name} will start'"
 

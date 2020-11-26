@@ -24,14 +24,12 @@ class TicTacToe
     @players[1].pick_symbol(sym2)
   end
 
-  def set_beginner
-    beginner = gets.chomp.to_s
-    until [@players[0].name, @players[1].name].include?(beginner)
-      puts 'wrong input, Please insert correct player name: '
-      beginner = gets.chomp.to_s
-    end
+  def check_beginner(beginner)
+    ![@players[0].name, @players[1].name].include?(beginner) ? true : false
+  end
 
-    @players[0], @players[1] = @players[1], @players[0] unless beginner == @players[0].name
+  def set_beginner
+    @players[0], @players[1] = @players[1], @players[0]
   end
 
   def put_current_player(step)
@@ -65,7 +63,6 @@ class TicTacToe
     end
 
     unless remains.size <= 1
-      puts "remains are: #{remains[0] + 1} and #{remains[1] + 1}"
       if win_move?(remains[0], @next_player.sym) == true || win_move?(remains[1], @current_player.sym) == true
         return false
       end
@@ -75,7 +72,6 @@ class TicTacToe
       end
     end
     if remains.size == 1
-      puts "remains are: #{remains[0] + 1}"
       return false if win_move?(remains[0], @next_player.sym) == true
     end
     true
