@@ -134,7 +134,7 @@ while flag == 'Y'
     i += 1
   end
 
-  puts 'Game is over. Would you like to continuue? (Y) or quit? (N): '
+  puts 'Game is over. Would you like to continue? (Y) or quit? (N): '
 
   flag = gets.chomp.to_s
 
