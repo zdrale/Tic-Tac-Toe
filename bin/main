@@ -1,110 +1,140 @@
 #!/usr/bin/env ruby
-def display_board(moves_array = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '])
-  puts "#{moves_array[0]} | #{moves_array[1]} | #{moves_array[2]}"
-  puts '----------'
-  puts "#{moves_array[3]} | #{moves_array[4]} | #{moves_array[5]}"
-  puts '----------'
-  puts "#{moves_array[6]} | #{moves_array[7]} | #{moves_array[8]}"
+
+require_relative '../lib/board.rb'
+require_relative '../lib/player.rb'
+require_relative '../lib/tictactoe.rb'
+
+def validate_name(name1, name2)
+  if name1 == name2
+    puts ' Same name is not allowed. Give different names for either one: '
+    return false
+  end
+  if [name1.size, name2.size].any? { |elem| elem < 2 }
+    puts ' Invalid name. Name should have more than one character.s Change one or two of the names: '
+    return false
+  end
+  true
 end
 
-puts 'Hi, Welcome to TicTacToe game'
+def validate_symbol(sym1, sym2)
+  if sym1 == sym2
+    puts ' Same symbols are not allowed. Change either of one: '
+    return false
+  end
+  if sym1.size > 1 || sym2.size > 1
+    puts 'Invalid symbol is used, number or more than one character not allowed. Re enter again: '
+    return false
+  end
+  true
+end
 
-puts 'Insert name of players: '
-
-players = []
-sym = []
-
-players << gets.chomp.to_s
-players << gets.chomp.to_s
-
-puts "Hi #{players[0]} and #{players[1]}, welcome to tictactoe game: "
-
-print display_board
-
-puts "Ok #{players[0]} please pick your symbol: "
-
-sym[0] = gets.chomp.to_s
-
-puts "Ok #{players[1]} please pick your symbol: "
-
-sym[1] = gets.chomp.to_s
-
-puts "#{players[0]} choses #{sym[0]}"
-puts "#{players[1]} choses #{sym[1]}"
+# Game user interface
 
 flag = 'Y'
 
 while flag == 'Y'
 
+  game = TicTacToe.new
+
+  puts 'Hi, Welcome to TicTacToe game'
+
+  puts 'Insert name of two players: '
+  check_symbol = false
+  # Creating player object
+  while check_symbol == false
+
+    players = game.create_players(gets.chomp.to_s, gets.chomp.to_s)
+
+    check_symbol = validate_name(players[0].name, players[1].name)
+
+  end
+
+  puts "Hi #{players[0].name} and #{players[1].name}, welcome to tictactoe game: "
+
+  game.create_board
+
+  game.print_board
+
+  check_sym = false
+
+  while check_sym == false
+
+    puts "Ok #{players[0].name} please pick your symbol: "
+
+    sym1 = gets.chomp.to_s
+
+    puts "Ok #{players[1].name} please pick your symbol: "
+
+    sym2 = gets.chomp.to_s
+
+    check_sym = validate_symbol(sym1, sym2)
+
+  end
+
+  game.pick_symbol(sym1, sym2)
+
+  puts "#{players[0].name} choses #{players[0].sym}"
+  puts "#{players[1].name} choses #{players[1].sym}"
+
   i = 0
 
   puts 'Game is ready. Now pick the player for the first move: '
 
-  name_match = false
+  beginner = gets.chomp.to_s
 
-  until name_match == true
+  while game.check_beginner(beginner)
+    puts 'Wrong name. You should give one of the players name or symbol. Please choose player for first move: '
     beginner = gets.chomp.to_s
-    name_match = true
-    next if beginner == players[0]
-
-    name_match = false
-    if beginner == players[1]
-      name_match = true
-      players[0], players[1] = players[1], players[0]
-      sym[0], sym[1] = sym[1], sym[0]
-    else
-      puts 'wrong input, Please insert correct player name: '
-    end
   end
 
-  puts "#{players[0]} will start'"
+  game.set_beginner if players[0].name != beginner
 
-  moves_arr = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+  puts "#{players[0].name} will start'"
 
   while i < 9
 
-    current_player = players[i % 2]
+    current_player = game.put_current_player(i)
+    game.put_next_player(i)
 
-    puts "@ #{current_player}, now your turn. Pick a cell which has available spot: "
+    puts "@ #{current_player.name}, now your turn. Pick a cell which has available spot: "
 
-    print display_board(moves_arr)
+    game.print_board
 
     pick = gets.chomp.to_i - 1
 
-    while (moves_arr[pick] != ' ') || !(0..10).cover?(pick)
-
+    while game.check_move(pick)
       puts 'wrong input. Please pick another cell no.: '
       pick = gets.chomp.to_i - 1
-
     end
-
-    moves_arr[pick] = sym[i % 2]
-
-    print display_board(moves_arr)
-
-    win_move = 9
-
-    draw_move = 0
-    draw_move = pick + 1 if i == 8
 
     game_flag = 0
 
-    case pick.to_i
-    when win_move - 1
+    if game.win_move?(pick) == true
       puts 'You made the winning move. You won!!!'
       game_flag = 1
-    when draw_move - 1
+    end
+
+    game.update_board(pick)
+    game.print_board
+
+    break unless game_flag.zero?
+
+    if [6, 7].include?(i) && game.draw_move? == true
       puts 'Game ends with draw result'
+      game_flag = 1
     else
+
       puts "You picked cell no. #{pick + 1}"
     end
+
+    game.print_board
 
     break unless game_flag.zero?
 
     i += 1
   end
 
-  puts 'Game is over. Would you like to continuue? (Y) or quit? (N): '
+  puts 'Game is over. Would you like to continue? (Y) or quit? (N): '
 
   flag = gets.chomp.to_s
 
