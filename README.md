@@ -96,11 +96,11 @@ The game can be played on terminal. To start the game just type 'ruby bin/main' 
 3. Once the name of the two players are given the game creates player objects and displays welcome message for the players      
    
     Hi Henok and Nikola, welcome to tictactoe game: 
-       |   |   
+    1 | 2 | 3 
     ---------- 
-       |   |   
+    4 | 5 | 6 
     ---------- 
-       |   |  
+    7 | 8 | 9
 
 4. Then the gams asks each player to choose their symbols. If the symbols are not valid the game displays error message. Numbers and more than one character is not allowed in the game.  
     
@@ -123,11 +123,11 @@ The game can be played on terminal. To start the game just type 'ruby bin/main' 
 Nikola will start'
     
     @ Nikola, now your turn. Pick a cell which has available spot: 
-      |   |   
+    1 | 2 | 3 
     ---------- 
-      |   |   
+    4 | 5 | 6 
     ---------- 
-      |   |  
+    7 | 8 | 9
 
 7. The player picks his/her cell by using number index. The number index of each cell is shown in the About the game section. The player can only pick index number from 1 to 9 only, other wise the game will display error message until valid input is given. 
     
@@ -136,31 +136,31 @@ Nikola will start'
 8. The game accepts the player input and updates the board and displays it to the player
     
     You picked cell no. 1
-    O |   |   
+    O | 2 | 3 
     ---------- 
-      |   |   
+    4 | 5 | 6 
     ---------- 
-      |   |  
+    7 | 8 | 9
 
 9. The game asks the next player to make a move while displaying the current board 
     
     @ Henok, now your turn. Pick a cell which has available spot: 
-    O |   |   
+    O | 2 | 3 
     ---------- 
-      |   |   
+    4 | 5 | 6 
     ---------- 
-      |   |  
+    7 | 8 | 9
 
 10. Now the next player picks available cell using the index number left. Picking already occupied cell will invoke error message until the player picks available spot. The game displays the current board to teh player so that the current player can see what available spots are there. 
     5
 11. Once the player make move the game will check if teh move is valid and it updates the board and displays it. 
     
     You picked cell no. 5
-    O |   |   
+    O | 2 | 3 
     ---------- 
-      | X |   
+    4 | 5 | 6 
     ---------- 
-      |   |  
+    7 | 8 | 9
 
 12. The game continues with the same loop with maximum  of 9 as described above until three conditions are met: 
     a) Game ends with win result (refer win conditions in the about the game section)
@@ -176,21 +176,21 @@ Winning move: As described in the about section, the winning move is achieved wh
     
     6
     You made the winning move. You won!!!
-    O |   | O 
+    O | 2 | O 
     ---------- 
     X | X | X 
     ---------- 
-      | O |  
+    7 | O | 9
     Game is over. Would you like to continue? (Y) or quit? (N): 
 
 Draw move: The game also checks if there is no more winning conditions can be achieved in the subsequent steps. The game starts to check if move will cause draw result when two spots are left in the game. 
 
     Game ends with draw result
-    O | X |   
+    O | X | 3 
     ---------- 
     X | O | O 
     ---------- 
-      | O | X
+    7 | O | X
     Game is over. Would you like to continue? (Y) or quit? (N): 
 
 As demonstrated in the example above, even though the game has two more spots to play with, there will be no winning condition, no matter what moves the players make subsequently. Therefore, the game declares the game end s with draw result. 

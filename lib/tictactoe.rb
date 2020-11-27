@@ -41,7 +41,7 @@ class TicTacToe
   end
 
   def check_move(pick)
-    (@board.symbol[pick] != ' ') || !(0..8).cover?(pick) ? true : false
+    [@players[0].sym, @players[1].sym].any?(@board.symbol[pick]) || !(0..8).cover?(pick) ? true : false
   end
 
   def update_board(pick)
@@ -58,7 +58,7 @@ class TicTacToe
   def draw_move?
     remains = []
     (0..8).each do |i|
-      remains << i unless @board.symbol[i] != ' '
+      remains << i unless [@players[0].sym, @players[1].sym].any?(@board.symbol[i])
       next i
     end
 
