@@ -107,12 +107,12 @@ The game can be played on terminal. To start the game just type 'ruby bin/main' 
     Ok Henok please pick your symbol: 
     X
     Ok Nikola please pick your symbol: 
-    O
+    Y
 
 5. Game assigns the input symbols to the respective player objects and displays message which asks players to choose the beginner. 
     
     Henok choses X
-    Nikola choses O
+    Nikola choses Y
     Game is ready. Now pick the player for the first move:
 
 6. One of the players input their name to begin. If players enter a name different from the creater player objects names, the game will display error message. At this point only one of the players names can be accepted.
@@ -136,7 +136,7 @@ Nikola will start'
 8. The game accepts the player input and updates the board and displays it to the player
     
     You picked cell no. 1
-    O | 2 | 3 
+    Y | 2 | 3 
     ---------- 
     4 | 5 | 6 
     ---------- 
@@ -145,7 +145,7 @@ Nikola will start'
 9. The game asks the next player to make a move while displaying the current board 
     
     @ Henok, now your turn. Pick a cell which has available spot: 
-    O | 2 | 3 
+    Y | 2 | 3 
     ---------- 
     4 | 5 | 6 
     ---------- 
@@ -156,9 +156,9 @@ Nikola will start'
 11. Once the player make move the game will check if teh move is valid and it updates the board and displays it. 
     
     You picked cell no. 5
-    O | 2 | 3 
+    Y | 2 | 3 
     ---------- 
-    4 | 5 | 6 
+    4 | X | 6 
     ---------- 
     7 | 8 | 9
 
@@ -176,21 +176,21 @@ Winning move: As described in the about section, the winning move is achieved wh
     
     6
     You made the winning move. You won!!!
-    O | 2 | O 
+    Y | 2 | Y  
     ---------- 
     X | X | X 
     ---------- 
-    7 | O | 9
+    7 | Y | 9
     Game is over. Would you like to continue? (Y) or quit? (N): 
 
 Draw move: The game also checks if there is no more winning conditions can be achieved in the subsequent steps. The game starts to check if move will cause draw result when two spots are left in the game. 
 
     Game ends with draw result
-    O | X | 3 
+    Y | X | 3 
     ---------- 
-    X | O | O 
+    X | Y | Y 
     ---------- 
-    7 | O | X
+    7 | Y | X
     Game is over. Would you like to continue? (Y) or quit? (N): 
 
 As demonstrated in the example above, even though the game has two more spots to play with, there will be no winning condition, no matter what moves the players make subsequently. Therefore, the game declares the game end s with draw result. 
