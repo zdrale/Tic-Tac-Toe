@@ -21,9 +21,9 @@ describe TicTacToe do
       players = game.create_players('Henok', 'Nikola', 'X', 'O')
       expect(players[1].sym).to eql('O')
     end
-    # it "returns Argument error when wrong number of argumets is given" do
-    #     expect(game.create_players('Henok', 'Nikola', 'X')).to raise_error(ArgumentError)
-    # end
+    it 'returns Argument error when wrong number of argumets is given' do
+      expect { game.create_players('Henok', 'Nikola', 'X') }.to raise_error(ArgumentError)
+    end
   end
 
   describe 'create_board' do
@@ -37,12 +37,19 @@ describe TicTacToe do
       game.create_board
       expect(game.print_board).to eql(nil)
     end
+    it ' returns nil value' do
+      expect { game.print_board }.to raise_error(NoMethodError)
+    end
   end
 
   describe 'check_beginner?' do
     it ' returns false while argument input is one of the players names' do
       game.create_players('Henok', 'Nikola', 'X', 'O')
       expect(game.check_beginner('Henok')).to eql(false)
+    end
+    it ' returns true while argument input is not one of the players names' do
+      game.create_players('Henok', 'Nikola', 'X', 'O')
+      expect(game.check_beginner('David')).to eql(true)
     end
   end
 
@@ -51,6 +58,11 @@ describe TicTacToe do
       players = game.create_players('Henok', 'Nikola', 'X', 'O')
       game.set_beginner
       expect(players[0].name).to eql('Nikola')
+    end
+    it ' does not keep the playr index as initially' do
+      players = game.create_players('Henok', 'Nikola', 'X', 'O')
+      game.set_beginner
+      expect(players[0].name).not_to eql('Henok')
     end
   end
 
@@ -64,6 +76,11 @@ describe TicTacToe do
       players = game.create_players('Henok', 'Nikola', 'X', 'O')
       expect(game.put_current_player(4)).to eql(players[0])
     end
+
+    it ' returns player object with index equal to argument modulus with 2' do
+      players = game.create_players('Henok', 'Nikola', 'X', 'O')
+      expect(game.put_current_player(4)).to_not eql(players[1])
+    end
   end
 
   describe 'put_next_player' do
@@ -75,6 +92,11 @@ describe TicTacToe do
     it ' returns player object with index equal to argument modulus with 2' do
       players = game.create_players('Henok', 'Nikola', 'X', 'O')
       expect(game.put_next_player(4)).to eql(players[1])
+    end
+
+    it ' returns player object with index equal to argument modulus with 2' do
+      players = game.create_players('Henok', 'Nikola', 'X', 'O')
+      expect(game.put_next_player(4)).not_to eql(players[0])
     end
   end
 
@@ -102,6 +124,30 @@ describe TicTacToe do
       game.update_board(4)
       expect(game.check_move(10)).to eql(true)
     end
+
+    it 'returns true when move is out of range' do
+      game.create_players('Henok', 'Nikola', 'X', 'O')
+      game.put_current_player(1)
+      game.create_board
+      game.update_board(4)
+      expect(game.check_move(10)).not_to eql(false)
+    end
+
+    it 'returns true when move is out of range' do
+      game.create_players('Henok', 'Nikola', 'X', 'O')
+      game.put_current_player(1)
+      game.create_board
+      game.update_board(4)
+      expect { game.check_move('T') }.to raise_error(TypeError)
+    end
+
+    it 'returns true when move is out of range' do
+      game.create_players('Henok', 'Nikola', 'X', 'O')
+      game.put_current_player(1)
+      game.create_board
+      game.update_board(4)
+      expect { game.check_move }.to raise_error(ArgumentError)
+    end
   end
 
   describe 'update_board' do
@@ -118,6 +164,12 @@ describe TicTacToe do
       board = game.create_board
       game.update_board(3)
       expect(board.symbol[3]).not_to eql('X')
+    end
+    it 'retruns' do
+      game.create_players('Henok', 'Nikola', 'X', 'O')
+      game.put_current_player(1)
+      game.create_board
+      expect { game.update_board }.to raise_error(ArgumentError)
     end
   end
 

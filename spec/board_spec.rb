@@ -15,10 +15,10 @@ describe Board do
       expect(board1.update_board(2, 'X')).to eq('X')
     end
 
-    # it " returns arg[1]" do
-    #     board1 = Board.new
-    #     expect(board1.update_board(2)).to raise_error(ArgumentError)
-    # end
+    it ' raises error message when wrong number of arguments is given' do
+      board1 = Board.new
+      expect { board1.update_board(2) }.to raise_error(ArgumentError)
+    end
   end
 
   describe 'display_board' do
