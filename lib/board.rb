@@ -1,19 +1,14 @@
 require_relative '../lib/styling.rb'
 
 class Board
-  attr_reader :symbol, :moves
+  attr_reader :symbol
 
   def initialize
-    @moves = []
-    @symbol = []
-    # 9.times do
-    #   @symbol << ' '
-    # end
     @symbol = ['1'.red, '2'.red, '3'.red, '4'.red, '5'.red, '6'.red, '7'.red, '8'.red, '9'.red]
   end
 
-  def update_board(picked_cell, player)
-    @symbol[picked_cell] = player.sym
+  def update_board(picked_cell, player_sym)
+    @symbol[picked_cell] = player_sym
   end
 
   def display_board

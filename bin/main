@@ -39,17 +39,19 @@ while flag == 'Y'
   puts 'Hi, Welcome to TicTacToe game'
 
   puts 'Insert name of two players: '
-  check_symbol = false
-  # Creating player object
-  while check_symbol == false
+  check_name = false
 
-    players = game.create_players(gets.chomp.to_s, gets.chomp.to_s)
+  # Accepting players names
 
-    check_symbol = validate_name(players[0].name, players[1].name)
+  while check_name == false
+    players_name = []
+    players_name = [gets.chomp.to_s, gets.chomp.to_s]
+
+    check_name = validate_name(players_name[0], players_name[1])
 
   end
 
-  puts "Hi #{players[0].name} and #{players[1].name}, welcome to tictactoe game: "
+  puts "Hi #{players_name[0]} and #{players_name[1]}, welcome to tictactoe game: "
 
   game.create_board
 
@@ -59,11 +61,11 @@ while flag == 'Y'
 
   while check_sym == false
 
-    puts "Ok #{players[0].name} please pick your symbol: "
+    puts "Ok #{players_name[0]} please pick your symbol: "
 
     sym1 = gets.chomp.to_s
 
-    puts "Ok #{players[1].name} please pick your symbol: "
+    puts "Ok #{players_name[1]} please pick your symbol: "
 
     sym2 = gets.chomp.to_s
 
@@ -71,7 +73,8 @@ while flag == 'Y'
 
   end
 
-  game.pick_symbol(sym1, sym2)
+  # Creating player objects
+  players = game.create_players(players_name[0], players_name[1], sym1, sym2)
 
   puts "#{players[0].name} choses #{players[0].sym}"
   puts "#{players[1].name} choses #{players[1].sym}"
