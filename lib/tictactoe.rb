@@ -4,7 +4,7 @@
 require_relative '../lib/board.rb'
 require_relative '../lib/player.rb'
 
-class TicTacToe  
+class TicTacToe
   WIN_TRIPLETS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]].freeze
 
   def create_players(name1, name2, sym1, sym2)
@@ -48,7 +48,7 @@ class TicTacToe
       return true if triplet.include?(picked + 1) && [@board.symbol[triplet[0] - 1], @board.symbol[triplet[1] - 1],
                                                       @board.symbol[triplet[2] - 1]].count(symb) == 2
     end
-    false 
+    false
   end
 
   def draw_move?

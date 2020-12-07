@@ -3,7 +3,7 @@ require_relative '../lib/styling.rb'
 class Board
   attr_reader :symbol
 
-  def initialize            
+  def initialize
     @symbol = ['1'.red, '2'.red, '3'.red, '4'.red, '5'.red, '6'.red, '7'.red, '8'.red, '9'.red]
   end
 

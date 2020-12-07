@@ -40,15 +40,14 @@ while flag == 'Y'
 
   puts 'Insert name of two players: '
   check_name = false
-  
+
   # Accepting players names
-   
+
   while check_name == false
-    players_name = Array.new
+    players_name = []
     players_name = [gets.chomp.to_s, gets.chomp.to_s]
-    
+
     check_name = validate_name(players_name[0], players_name[1])
-    
 
   end
 
@@ -74,8 +73,8 @@ while flag == 'Y'
 
   end
 
-  # Creating player objects 
-  players = game.create_players(players_name[0], players_name[1], sym1, sym2)  
+  # Creating player objects
+  players = game.create_players(players_name[0], players_name[1], sym1, sym2)
 
   puts "#{players[0].name} choses #{players[0].sym}"
   puts "#{players[1].name} choses #{players[1].sym}"
