@@ -4,11 +4,11 @@
 require_relative '../lib/board.rb'
 require_relative '../lib/player.rb'
 
-class TicTacToe
+class TicTacToe  
   WIN_TRIPLETS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]].freeze
 
-  def create_players(name1, name2)
-    @players = [Player.new(name1), Player.new(name2)]
+  def create_players(name1, name2, sym1, sym2)
+    @players = [Player.new(name1, sym1), Player.new(name2, sym2)]
   end
 
   def create_board
@@ -17,11 +17,6 @@ class TicTacToe
 
   def print_board
     print @board.display_board
-  end
-
-  def pick_symbol(sym1, sym2)
-    @players[0].pick_symbol(sym1)
-    @players[1].pick_symbol(sym2)
   end
 
   def check_beginner(beginner)
@@ -44,8 +39,8 @@ class TicTacToe
     [@players[0].sym, @players[1].sym].any?(@board.symbol[pick]) || !(0..8).cover?(pick) ? true : false
   end
 
-  def update_board(pick)
-    @board.update_board(pick, @current_player)
+  def update_board(pick, player_sym = @current_player.sym)
+    @board.update_board(pick, player_sym)
   end
 
   def win_move?(picked, symb = @current_player.sym)
@@ -53,6 +48,7 @@ class TicTacToe
       return true if triplet.include?(picked + 1) && [@board.symbol[triplet[0] - 1], @board.symbol[triplet[1] - 1],
                                                       @board.symbol[triplet[2] - 1]].count(symb) == 2
     end
+    false 
   end
 
   def draw_move?

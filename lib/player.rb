@@ -1,11 +1,13 @@
 class Player
-  attr_reader :name, :game, :sym
+  attr_reader :name, :sym    
 
-  def initialize(name)
+  def initialize(name, sym)
     @name = name
-  end
+    @sym = sym 
+  end       
 
-  def pick_symbol(sym)
-    @sym = sym
-  end
 end
+
+
+
+
